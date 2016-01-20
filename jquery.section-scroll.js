@@ -7,7 +7,6 @@
  *  Licensed under MIT
  *
  */
-
 (function ($) {
     $.fn.sectionScroll = function (options) {
       var $parent_elem,
@@ -105,7 +104,7 @@
               $parent_elem.trigger('section-reached');
               setTimeout(function () {
 
-                  $(cur).addClass('active-section');    
+                  $(cur).addClass('active-section');
                   menuItems
                       .removeClass("active")
                       .end()
