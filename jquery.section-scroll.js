@@ -1,5 +1,5 @@
 /*
- *  jQuery Section Scroll v1.0.0
+ *  jQuery Section Scroll v1.0.1
  *
  *  Copyright (c) 2016 Danish Iqbal
  *  http://plugins.imdanishiqbal.com/section-scroll
@@ -108,7 +108,7 @@
                   menuItems
                       .removeClass("active")
                       .end()
-                      .find('a').filter("[href=#" + id + "]")
+                      .find('a').filter('[href="#' + id + '"]')
                       .parent()
                       .addClass("active");
               });
@@ -138,7 +138,7 @@
                   menuItems
                       .removeClass("active")
                       .end()
-                      .find('a').filter("[href=#" + id + "]")
+                      .find('a').filter('[href="#' + id + '"]')
                       .parent()
                       .addClass("active");
               });
