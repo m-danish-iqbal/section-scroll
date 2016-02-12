@@ -86,11 +86,7 @@
       });
 
       $(document).ready(function () {
-          $('html, body').stop().animate({
-              scrollTop: 1
-          }, 0);
-
-          var fromTop = $(this).scrollTop();
+          var fromTop = $(this).scrollTop() + ($window.height() / 2.5);
           var cur = scrollItems.map(function () {
               if ($(this).offset().top < fromTop) return this;
           });
