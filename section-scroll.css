@@ -80,7 +80,7 @@
 .section-bullets li.active a:before {
     width: 100%;
     transition-duration: .3s;
-    transition-delay: 0.5s;
+    transition-delay: 0.4s;
 }
 
 .section-bullets li:hover a {
@@ -95,5 +95,5 @@
 .section-bullets li.active span {
     opacity: 1;
     transition-duration: .3s;
-    transition-delay: 0.6s;
+    transition-delay: 0.5s;
 }
