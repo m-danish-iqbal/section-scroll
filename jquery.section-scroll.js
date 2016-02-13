@@ -101,7 +101,7 @@
           cur = cur[cur.length - 1];
           var id = cur[0] ? cur[0].id : '';
           $.fn.sectionScroll.activeSection = cur;
-          $activeSection = cur;
+
           if (lastId !== id) {
               $sections.removeClass('active-section');
               
