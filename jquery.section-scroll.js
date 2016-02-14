@@ -1,5 +1,6 @@
 /*
- *  jQuery Section Scroll v1.0.1
+ *  jQuery Section Scroll v2
+ *  Contributor: https://github.com/sylvainbaronnet
  *
  *  Copyright (c) 2016 Danish Iqbal
  *  http://plugins.imdanishiqbal.com/section-scroll
