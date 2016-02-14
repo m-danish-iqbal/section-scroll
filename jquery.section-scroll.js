@@ -94,7 +94,11 @@
               $.fn.sectionScroll.activeSection = cur;
               $container.trigger('section-reached');
           }
-      }).scroll(); // trigger scroll event
+      });
+
+      $(function() {
+          $window.scroll();
+      });
 
       return $container;
     };
