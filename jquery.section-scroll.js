@@ -8,140 +8,98 @@
  *
  */
 (function ($) {
+    'use strict';
+
     $.fn.sectionScroll = function (options) {
-      var $parent_elem,
-        $window,
-        $section_elem,
-        $section_number,
-        $bullets,
-        $sectionInView,
-        totalSections,
-        $sec_id,
-        $bullets_class,
-        $default_sections_class,
-        $default_bullets_class,
-        // Default options.
-        settings = $.extend({
+      var $container = this,
+          $window = $(window),
+          $section_number = 1,
+          lastId,
+          settings = $.extend({
             bulletsClass: 'section-bullets',
             sectionsClass: 'scrollable-section',
             scrollDuration: 1000,
             titles: true,
             topOffset: 0,
             easing: ''
-        }, options);
-      $parent_elem = this;
-      $section_number = 1;
-      $window = $(window);
-      $section_elem = settings.sectionsClass;
-      $bullets_class = settings.bulletsClass;
+          }, options);
 
-      $bullets = '<div class="bullets-container"><ul class="'+ $bullets_class +'"></ul></div>';
-      $parent_elem.prepend($bullets);
+      var $sections = $('.' + settings.sectionsClass);
+      var $bullets  = $('<div class="bullets-container"><ul class="'+ settings.bulletsClass +'"></ul></div>')
+                      .prependTo($container)
+                      .find('ul');
 
-      totalSections = 0;
-      $sec_id = 0;
+      /* Build navigation */
+      var bullets_html = '';
+      $sections.each(function () {
 
-      $('.' + $section_elem).each(function () {
+          var $this = $(this);
+          var title = $this.data('section-title') || '';
 
-          if (!($(this)).data('section-title')) {
-              $(this).attr('data-section-title', '');
-          }
+          $this.attr('id', 'scrollto-section-' + $section_number);
 
-          $(this).attr('id', 'scrollto-section-' + $section_number);
-          $sec_id++;
-          $('.' + $bullets_class).append('<li><a title="' + $(this).data('section-title') + '" href="#scrollto-section-' + $sec_id + '"><span>' + $(this).data('section-title') + '</span></a></li>');
+          var bullet_title = settings.titles ? '<span>' + title + '</span>' : '';
+
+          bullets_html += '<li><a title="' + title + '" href="#scrollto-section-' + $section_number + '">' + bullet_title + '</a></li>';
+          
           $section_number++;
-          totalSections++;
+      });
+      
+      var $bullets_items = $(bullets_html).appendTo($bullets);
 
+      var scrollItems = $bullets_items.map(function () {
+          var item = $($(this).find('a').attr('href'));
+          if (item[0]) {
+              return item;
+          }
       });
 
+      $bullets_items.on('click', function (e) {
 
-      if (!(settings.titles)) {
-          $('.' + $bullets_class).find('span').remove();
-      }
-
-      var lastId,
-          $bulletsMenuHeight = $('.' + $bullets_class).outerHeight() + 15,
-          menuItems = $('.' + $bullets_class).find("li"),
-          scrollItems = $(menuItems).map(function () {
-              var item = $($(this).find('a').attr("href"));
-              if ($(item).length) {
-                  return item;
-              }
-          });
-
-
-      menuItems.click(function (e) {
-
-          var href = $(this).find('a').attr("href"),
-              offsetTop = href === "#" ? 0 : $(href).offset().top;
+          var href = $(this).find('a').attr('href'),
+              offsetTop = href === '#' ? 0 : $(href).offset().top;
 
           $('html, body').stop().animate({
 
               scrollTop: offsetTop - settings.topOffset
           }, settings.scrollDuration, settings.easing, function(){
-              $parent_elem.trigger('scrolled-to-section').stop();
+              $container.trigger('scrolled-to-section').stop();
           });
           e.preventDefault();
       });
 
-      $(document).ready(function () {
-          
-          var fromTop = $(this).scrollTop() + ($window.height() / 2.5);
-          
-          var cur = scrollItems.map(function () {
-              if ($(this).offset().top < fromTop) return this;
-          });
-          cur = cur[cur.length - 1];
-          var id = cur && cur.length ? cur[0].id : "";
-          $.fn.sectionScroll.activeSection = cur;
-
-          if (lastId !== id) {
-              $('.' + $section_elem).removeClass('active-section');
-              lastId = id;
-              $parent_elem.trigger('section-reached');
-              setTimeout(function () {
-
-                  $(cur).addClass('active-section');
-                  menuItems
-                      .removeClass("active")
-                      .end()
-                      .find('a').filter('[href="#' + id + '"]')
-                      .parent()
-                      .addClass("active");
-              });
-          }
-      })
-      $(window).scroll(function () {
-          var fromTop = $(this).scrollTop() + ($window.height() / 2.5);
+      $window.on('scroll', function () {
+          var fromTop = $window.scrollTop() + ($window.height() / 2.5);
 
           var cur = scrollItems.map(function () {
 
               if ($(this).offset().top < fromTop) {
-
                   return this;
               }
-
           });
           cur = cur[cur.length - 1];
-          var id = cur && cur.length ? cur[0].id : "";
-          $.fn.sectionScroll.activeSection = cur;
-          $activeSection = cur;
+          var id = cur[0] ? cur[0].id : '';
+
           if (lastId !== id) {
-              $('.' + $section_elem).removeClass('active-section');
+              $sections.removeClass('active-section');
+              
+              $(cur).addClass('active-section');
+              $bullets_items
+                  .removeClass('active')
+                  .find('a[href="#' + id + '"]')
+                  .parent()
+                  .addClass('active');
+
               lastId = id;
-              $parent_elem.trigger('section-reached');
-              setTimeout(function () {
-                  $(cur).addClass('active-section');
-                  menuItems
-                      .removeClass("active")
-                      .end()
-                      .find('a').filter('[href="#' + id + '"]')
-                      .parent()
-                      .addClass("active");
-              });
+              $.fn.sectionScroll.activeSection = cur;
+              $container.trigger('section-reached');
           }
       });
-      return $parent_elem;
+
+      $(function() {
+          $window.scroll();
+      });
+
+      return $container;
     };
 }(jQuery));
