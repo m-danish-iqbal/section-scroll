@@ -78,7 +78,7 @@
                   return this;
               }
           });
-          cur = cur[cur.length - 1];
+          cur = cur.length > 0 ? cur[cur.length - 1] : [];
           var id = cur[0] ? cur[0].id : '';
 
           if (lastId !== id) {
