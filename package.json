@@ -1,0 +1,23 @@
+{
+  "name": "section-scroll",
+  "version": "2.0.0",
+  "description": "jQuery plugin for automatically making scrollable sections navigation",
+  "main": "jquery.section-scroll.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m-danish-iqbal/section-scroll.git"
+  },
+  "keywords": [
+    "jQuery",
+    "scroll"
+  ],
+  "author": "Danish Iqbal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m-danish-iqbal/section-scroll/issues"
+  },
+  "homepage": "https://github.com/m-danish-iqbal/section-scroll#readme"
+}
