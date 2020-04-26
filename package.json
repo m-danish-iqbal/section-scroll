@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/m-danish-iqbal/section-scroll#readme",
   "dependencies": {
-    "jQuery": "^1.7.4"
+    "jquery": ">=3.4.0"
   }
 }
